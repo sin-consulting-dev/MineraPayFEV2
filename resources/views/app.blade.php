@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- This system is far more better than CORETAX! -->
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
