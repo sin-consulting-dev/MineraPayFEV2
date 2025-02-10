@@ -1,9 +1,13 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Authenticated from "@/layouts/AuthenticatedLayout";
+import { Head } from "@inertiajs/react";
 
 export default function Page() {
   return (
     <Authenticated>
+      <Head>
+        <title>Dashboard</title>
+      </Head>
       <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
         <div className="grid auto-rows-min gap-4 md:grid-cols-4">
           <Card>
