@@ -3,9 +3,8 @@ import {
   Bell,
   ChevronsUpDown,
   CreditCard,
-  KeyIcon,
-  LogOut,
-  Sparkles,
+  KeySquareIcon,
+  LogOut
 } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -19,26 +18,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  useSidebar,
+  SidebarMenuButton
 } from "@/components/ui/sidebar";
-import { router, usePage } from "@inertiajs/react";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "../../ui/alert-dialog";
+import { usePage } from "@inertiajs/react";
 import { createContext, useState } from "react";
-import { AlertDialogLogout } from "./menu-logout";
 import { AlertDialogCredentials } from "./menu-credentials";
+import { AlertDialogLogout } from "./menu-logout";
 
 export const NavUserContext = createContext({
   state: {
@@ -101,7 +86,7 @@ export function NavUser() {
           <DropdownMenuSeparator />
           <DropdownMenuGroup onClick={() => setShowCredentialsDialog(true)}>
             <DropdownMenuItem>
-              <KeyIcon />
+              <KeySquareIcon />
               View Client Credentials
             </DropdownMenuItem>
           </DropdownMenuGroup>

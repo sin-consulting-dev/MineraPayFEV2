@@ -1,163 +1,104 @@
-import * as React from "react"
 import {
-  BookOpen,
-  Bot,
+  CheckCircleIcon,
   Command,
-  Frame,
+  ContactIcon,
+  HomeIcon,
+  IdCardIcon,
   LifeBuoy,
-  Map,
-  PieChart,
+  ListChecksIcon,
+  LogsIcon,
+  ScrollTextIcon,
   Send,
-  Settings2,
-  SquareTerminal,
-} from "lucide-react"
+  ShieldIcon,
+  UserIcon
+} from "lucide-react";
+import * as React from "react";
 
-import { NavMain } from "@/components/nav-main"
-import { NavProjects } from "@/components/nav-projects"
-import { NavSecondary } from "@/components/nav-secondary"
-import { NavUser } from "@/components/fragments/nav-user"
+import { NavMain } from "@/components/nav-main";
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar"
-
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  navMain: [
-    {
-      title: "Playground",
-      url: "#",
-      icon: SquareTerminal,
-      isActive: true,
-      items: [
-        {
-          title: "History",
-          url: "#",
-        },
-        {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Models",
-      url: "#",
-      icon: Bot,
-      items: [
-        {
-          title: "Genesis",
-          url: "#",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Documentation",
-      url: "#",
-      icon: BookOpen,
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
-    },
-  ],
-  navSecondary: [
-    {
-      title: "Support",
-      url: "#",
-      icon: LifeBuoy,
-    },
-    {
-      title: "Feedback",
-      url: "#",
-      icon: Send,
-    },
-  ],
-  projects: [
-    {
-      name: "Design Engineering",
-      url: "#",
-      icon: Frame,
-    },
-    {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChart,
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: Map,
-    },
-  ],
-}
+} from "@/components/ui/sidebar";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const data = {
+    navMain: [
+      {
+        title: "Dashboard",
+        url: "/",
+        icon: HomeIcon,
+        isActive: window.location.pathname === "/",
+      },
+      {
+        title: "Merchant Center",
+        url: "/",
+        icon: IdCardIcon,
+      },
+      {
+        title: "Merchant Approval",
+        url: "/",
+        icon: CheckCircleIcon,
+      },
+    ],
+    navTransactions: [
+      {
+        title: "Settlement",
+        url: "/",
+        icon: ListChecksIcon,
+      },
+      {
+        title: "Settlement Logs",
+        url: "/",
+        icon: LogsIcon,
+      },
+      {
+        title: "Transaction Logs",
+        url: "/",
+        icon: ScrollTextIcon,
+      },
+    ],
+    navConfiguration: [
+      {
+        title: "Users",
+        url: "/",
+        icon: UserIcon,
+      },
+      {
+        title: "Roles",
+        url: "/",
+        icon: ShieldIcon,
+      },
+      {
+        title: "Admin",
+        url: "/",
+        icon: ContactIcon,
+      },
+    ],
+    navSecondary: [
+      {
+        title: "Support",
+        url: "#",
+        icon: LifeBuoy,
+      },
+      {
+        title: "Feedback",
+        url: "#",
+        icon: Send,
+      },
+    ],
+  };
+
   return (
     <Sidebar variant="inset" {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <a href="#">
+              <div className="flex items-center">
                 <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                   <Command className="size-4" />
                 </div>
@@ -165,16 +106,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   <span className="truncate font-semibold">MineraPay</span>
                   <span className="truncate text-xs">Merchant Dashboard</span>
                 </div>
-              </a>
+              </div>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
+        <NavMain items={data.navTransactions} title="Transactions" />
+        <NavMain items={data.navConfiguration} title="Configuration" />
+        <NavMain items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
     </Sidebar>
-  )
+  );
 }

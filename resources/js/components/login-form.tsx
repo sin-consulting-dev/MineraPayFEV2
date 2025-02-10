@@ -41,7 +41,7 @@ export function LoginForm({
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    router.post('/login', values)
+    router.post("/login", values);
   }
 
   return (
@@ -87,13 +87,19 @@ export function LoginForm({
                       </a>
                     </div>
                     <FormControl>
-                      <Input type="password" placeholder="Password" {...field} />
+                      <Input
+                        type="password"
+                        placeholder="Password"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full">Submit</Button>
+              <Button type="submit" className="w-full">
+                Submit
+              </Button>
               <div className="text-center text-sm">
                 Don&apos;t have an account?{" "}
                 <a href="#" className="underline underline-offset-4">
@@ -111,9 +117,13 @@ export function LoginForm({
           </div>
         </CardContent>
       </Card>
-      <div className="text-balance text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 hover:[&_a]:text-primary">
-        By continuing, you agree to our <a href="#">Terms of Service</a> and{" "}
-        <a href="#">Privacy Policy</a>.
+      <div className="space-y-2">
+        <div className="text-balance text-center text-sm text-muted-foreground">
+          MineraPay © 2021. All rights reserved.
+        </div>
+        <div className="text-balance text-center text-xs text-muted-foreground/80">
+          v2.0.0
+        </div>
       </div>
     </div>
   );
