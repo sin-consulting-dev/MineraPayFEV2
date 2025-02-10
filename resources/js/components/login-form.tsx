@@ -46,7 +46,10 @@ export function LoginForm({
   function onSubmit(values: z.infer<typeof formSchema>) {
     setSubmitting(true);
     router.post("/login", values, {
-      onFinish: () => setSubmitting(false),
+      onFinish: () => {
+        form.resetField('password');
+        setSubmitting(false)
+      },
     });
   }
 
