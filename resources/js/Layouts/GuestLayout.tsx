@@ -9,6 +9,7 @@ export default function Guest({ children }: PropsWithChildren) {
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
+        backgroundAttachment: "fixed"
       }}
     >
       <div className="w-full max-w-sm md:max-w-3xl">{children}</div>
