@@ -17,6 +17,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { router, usePage } from "@inertiajs/react";
+import { useState } from "react";
+import { LoaderCircle } from "lucide-react";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -28,6 +30,7 @@ export function LoginForm({
   ...props
 }: React.ComponentProps<"div">) {
   const { errors } = usePage().props;
+  const [isSubmitting, setSubmitting] = useState(false);
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
@@ -41,7 +44,10 @@ export function LoginForm({
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    router.post("/login", values);
+    setSubmitting(true);
+    router.post("/login", values, {
+      onFinish: () => setSubmitting(false),
+    });
   }
 
   return (
@@ -62,6 +68,7 @@ export function LoginForm({
               <FormField
                 control={form.control}
                 name="email"
+                disabled={isSubmitting}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Email Address</FormLabel>
@@ -75,6 +82,7 @@ export function LoginForm({
               <FormField
                 control={form.control}
                 name="password"
+                disabled={isSubmitting}
                 render={({ field }) => (
                   <FormItem>
                     <div className="flex items-center">
@@ -97,8 +105,9 @@ export function LoginForm({
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full">
-                Submit
+              <Button type="submit" className="w-full" disabled={isSubmitting}>
+                {isSubmitting && <LoaderCircle className="animate-spin" />}
+                {isSubmitting ? "Logging in..." : "Login"}
               </Button>
               <div className="text-center text-sm">
                 Don&apos;t have an account?{" "}
