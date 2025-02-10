@@ -1,2 +1,1 @@
-# MineraPayFEV2
-Revamp MineraPay
+# MineraPay Dashboard
