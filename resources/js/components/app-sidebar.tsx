@@ -1,12 +1,13 @@
 import {
-  CheckCircleIcon,
+  Building2Icon,
+  CodeXmlIcon,
   Command,
   ContactIcon,
+  FolderPlusIcon,
+  GlobeIcon,
   HomeIcon,
-  IdCardIcon,
   LifeBuoy,
   ListChecksIcon,
-  LogsIcon,
   ScrollTextIcon,
   Send,
   ShieldIcon,
@@ -28,37 +29,65 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const data = {
     navMain: [
       {
-        title: "Dashboard",
+        title: "Merchant Dashboard",
         url: "/",
         icon: HomeIcon,
         isActive: window.location.pathname === "/",
       },
       {
-        title: "Merchant Center",
-        url: "/",
-        icon: IdCardIcon,
-      },
-      {
-        title: "Merchant Approval",
-        url: "/",
-        icon: CheckCircleIcon,
+        title: "Merchant Domain List",
+        url: "/merchant/domain",
+        icon: GlobeIcon,
+        isActive: window.location.pathname === "/merchant/domain",
       },
     ],
-    navTransactions: [
+    navDeposit: [
       {
-        title: "Settlement",
-        url: "/",
+        title: "Deposit List",
+        url: "/deposit",
+        isActive: window.location.pathname.startsWith("/deposit"),
+        icon: ScrollTextIcon,
+      },
+    ],
+    navWithdrawal: [
+      {
+        title: "Withdraw List",
+        url: "/withdraw",
+        isActive: window.location.pathname.startsWith("/withdraw"),
+        icon: ScrollTextIcon,
+      },
+    ],
+    navDisbursement: [
+      {
+        title: "Bank Details",
+        url: "/merchant/bank-account",
+        icon: Building2Icon,
+      },
+      {
+        title: "Submit Disbursement",
+        url: "/disbursement/create",
+        icon: FolderPlusIcon,
+      },
+      {
+        title: "Disbursement List",
+        url: "/disbursement",
         icon: ListChecksIcon,
       },
+    ],
+    navGuideline: [
       {
-        title: "Settlement Logs",
-        url: "/",
-        icon: LogsIcon,
+        title: "API Docs",
+        icon: ScrollTextIcon,
+        onClick: () => {
+          window.open("https://minerapay.com", "_blank");
+        },
       },
       {
-        title: "Transaction Logs",
-        url: "/",
-        icon: ScrollTextIcon,
+        title: "SDK Implementation Docs",
+        icon: CodeXmlIcon,
+        onClick: () => {
+          window.open("https://sdk.minerapay.com", "_blank");
+        },
       },
     ],
     navConfiguration: [
@@ -112,10 +141,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavMain items={data.navTransactions} title="Transactions" />
-        <NavMain items={data.navConfiguration} title="Configuration" />
-        <NavMain items={data.navSecondary} className="mt-auto" />
+        <NavMain items={data.navMain} title="Account Information" />
+        <NavMain items={data.navDeposit} title="Deposit Information" />
+        <NavMain
+          items={data.navWithdrawal}
+          title="Withdrawal Information"
+        />
+        <NavMain items={data.navDisbursement} title="Disbursement Information" />
+        <NavMain items={data.navGuideline} title="Guidelines" />
       </SidebarContent>
     </Sidebar>
   );

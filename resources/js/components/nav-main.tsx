@@ -28,7 +28,7 @@ export function NavMain({
   title?: string | null;
   items: {
     title: string;
-    url: string;
+    url?: string;
     icon: LucideIcon;
     isActive?: boolean;
     onClick?: VoidFunction;
@@ -94,6 +94,7 @@ export function NavMain({
                   <SidebarMenuButton
                     onClick={() => item.onClick && item.onClick()}
                   >
+                    {item.icon && <item.icon />}
                     <span>{item.title}</span>
                   </SidebarMenuButton>
                 )}

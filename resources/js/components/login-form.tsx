@@ -1,24 +1,22 @@
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
+  FormMessage
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { router, usePage } from "@inertiajs/react";
+import { LoaderCircle } from "lucide-react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { router, usePage } from "@inertiajs/react";
-import { useState } from "react";
-import { LoaderCircle } from "lucide-react";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -47,8 +45,8 @@ export function LoginForm({
     setSubmitting(true);
     router.post("/login", values, {
       onFinish: () => {
-        form.resetField('password');
-        setSubmitting(false)
+        form.resetField("password");
+        setSubmitting(false);
       },
     });
   }
