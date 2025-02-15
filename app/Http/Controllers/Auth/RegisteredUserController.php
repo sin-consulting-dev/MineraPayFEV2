@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Merchant;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
+use Str;
 
 class RegisteredUserController extends Controller
 {
@@ -20,7 +22,13 @@ class RegisteredUserController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('Auth/Register');
+        $captchaEnabled = config('services.hcaptcha.enabled', false);
+        $captchaSiteKey = config('services.hcaptcha.site_key');
+
+        return Inertia::render('Auth/Register', [
+            'captchaEnabled' => $captchaEnabled,
+            'captchaSiteKey' => $captchaSiteKey,
+        ]);
     }
 
     /**
@@ -32,11 +40,24 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
+            'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $user = User::create([
+        $nameParts = explode(' ', $request->name);
+        $key = count($nameParts) > 1 ?
+            strtoupper(substr($nameParts[0], 0, 2) . substr($nameParts[1], 0, 1)) :
+            strtoupper(substr(preg_replace('/\s+/', '', $request->name), 0, 3));
+
+        $merchant = Merchant::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'key' => $key,
+            'client_key' => Str::uuid(),
+            'client_secret' => Str::random(64),
+        ]);
+
+        $user = $merchant->users()->create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
@@ -46,6 +67,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        return to_route('dashboard');
     }
 }

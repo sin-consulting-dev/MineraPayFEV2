@@ -151,7 +151,7 @@ export default function MerchantDomainIndex() {
               <span>Register Domain</span>
             </Button>
           </div>
-          <Card>
+          <Card className="flex flex-grow">
             <Table>
               <TableHeader>
                 <TableRow>

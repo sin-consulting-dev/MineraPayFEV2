@@ -2,7 +2,7 @@ import { LoginForm } from "@/components/login-form";
 import Guest from "@/layouts/GuestLayout";
 import { Head } from "@inertiajs/react";
 
-export default function LoginPage() {
+export default function Page() {
   return (
     <Guest>
       <Head>

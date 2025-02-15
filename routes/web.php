@@ -2,15 +2,19 @@
 
 use App\Http\Controllers\DepositController;
 use App\Http\Controllers\MerchantDomainController;
+use App\Http\Controllers\OnboardingController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
+
+    Route::get('/onboarding/{step?}', [OnboardingController::class, 'index'])->name('onboarding.index');
+    Route::post('/onboarding/{step?}', [OnboardingController::class, 'store'])->name('onboarding.store');
 
     Route::prefix('merchant')->name('merchant.')->group(function () {
         Route::resource('domain', MerchantDomainController::class);

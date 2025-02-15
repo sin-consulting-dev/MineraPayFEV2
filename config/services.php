@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    'hcaptcha' => [
+        'enabled' => env('HCAPTCHA_ENABLED', env('APP_ENV') !== 'local'),
+        'site_key' => env('HCAPTCHA_SITE_KEY'),
+        'secret_key' => env('HCAPTCHA_SECRET_KEY'),
+    ],
 ];

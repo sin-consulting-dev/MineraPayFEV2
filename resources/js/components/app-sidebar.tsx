@@ -8,10 +8,11 @@ import {
   HomeIcon,
   LifeBuoy,
   ListChecksIcon,
+  MailCheckIcon,
   ScrollTextIcon,
   Send,
   ShieldIcon,
-  UserIcon
+  UserIcon,
 } from "lucide-react";
 import * as React from "react";
 
@@ -24,6 +25,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { Button } from "./ui/button";
+import { Link } from "@inertiajs/react";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const data = {
@@ -141,13 +144,21 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
+        <div className="px-2 flex flex-col gap-2">
+          <Link href="/onboarding">
+            <Button className="flex items-center bg-amber-600 hover:bg-amber-500 active:bg-amber-700 w-full">
+              <MailCheckIcon />
+              <span>Finish Registration</span>
+            </Button>
+          </Link>
+        </div>
         <NavMain items={data.navMain} title="Account Information" />
         <NavMain items={data.navDeposit} title="Deposit Information" />
+        <NavMain items={data.navWithdrawal} title="Withdrawal Information" />
         <NavMain
-          items={data.navWithdrawal}
-          title="Withdrawal Information"
+          items={data.navDisbursement}
+          title="Disbursement Information"
         />
-        <NavMain items={data.navDisbursement} title="Disbursement Information" />
         <NavMain items={data.navGuideline} title="Guidelines" />
       </SidebarContent>
     </Sidebar>

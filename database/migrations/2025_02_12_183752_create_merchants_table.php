@@ -30,7 +30,7 @@ return new class extends Migration {
             $table->string('client_secret');
             $table->boolean('is_head_group')->default(false);
             $table->boolean('is_verified')->default(false);
-            $table->foreignId('merchant_group_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('merchant_group_id')->nullable()->constrained()->cascadeOnDelete();
             $table->decimal('active_balance', 20, 2)->nullable();
             $table->decimal('pending_balance', 20, 2)->nullable();
             $table->decimal('total_disburse', 20, 2)->nullable();

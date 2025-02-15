@@ -35,6 +35,11 @@ class Merchant extends Model
         ];
     }
 
+    public function users()
+    {
+        return $this->hasMany(User::class)->where('type', User::MERCHANT);
+    }
+
     public function group()
     {
         return $this->belongsTo(MerchantGroup::class);
