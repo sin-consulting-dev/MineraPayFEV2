@@ -1,3 +1,4 @@
+import { Bank } from "./bank";
 import { SoftDeleteEntity, TimestampEntity } from "./base";
 
 export type Merchant = {
@@ -25,5 +26,16 @@ export type MerchantGroup = {
   token: string;
   provider: string;
   created_at: Date | null;
+} & TimestampEntity &
+  SoftDeleteEntity;
+
+export type MerchantBankAccount = {
+  id: string;
+  merchant_id: string;
+  bank_id: number;
+  name: string;
+  number: string;
+  bank: Bank;
+  merchant: Merchant;
 } & TimestampEntity &
   SoftDeleteEntity;

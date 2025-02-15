@@ -49,4 +49,9 @@ class Merchant extends Model
     {
         return $this->hasMany(MerchantDomain::class);
     }
+
+    public function bankAccounts()
+    {
+        return $this->hasMany(MerchantBankAccount::class);
+    }
 }

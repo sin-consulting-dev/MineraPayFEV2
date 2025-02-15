@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\BankController;
 use App\Http\Controllers\DepositController;
+use App\Http\Controllers\MerchantBankAccountController;
 use App\Http\Controllers\MerchantDomainController;
 use App\Http\Controllers\OnboardingController;
 use App\Http\Controllers\ProfileController;
@@ -13,11 +15,14 @@ Route::middleware(['auth'])->group(function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
+    Route::get('bank', [BankController::class, 'index'])->name('bank.index');
+
     Route::get('/onboarding/{step?}', [OnboardingController::class, 'index'])->name('onboarding.index');
     Route::post('/onboarding/{step?}', [OnboardingController::class, 'store'])->name('onboarding.store');
 
     Route::prefix('merchant')->name('merchant.')->group(function () {
         Route::resource('domain', MerchantDomainController::class);
+        Route::resource('bank-account', MerchantBankAccountController::class);
     });
 
     Route::resource('deposit', DepositController::class);
