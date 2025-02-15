@@ -93,21 +93,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         },
       },
     ],
-    navConfiguration: [
+    navMasterData: [
       {
-        title: "Users",
-        url: "/",
+        title: "Staff Management",
+        url: "/staff",
         icon: UserIcon,
-      },
-      {
-        title: "Roles",
-        url: "/",
-        icon: ShieldIcon,
-      },
-      {
-        title: "Admin",
-        url: "/",
-        icon: ContactIcon,
       },
     ],
     navSecondary: [
@@ -159,6 +149,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           items={data.navDisbursement}
           title="Disbursement Information"
         />
+        <NavMain items={data.navMasterData} title="Master Data" />
         <NavMain items={data.navGuideline} title="Guidelines" />
       </SidebarContent>
     </Sidebar>

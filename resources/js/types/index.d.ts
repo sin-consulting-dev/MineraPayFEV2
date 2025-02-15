@@ -1,10 +1,17 @@
-export interface User {
-  id: number;
+import { SoftDeleteEntity, TimestampEntity } from "./entity/base";
+import { Merchant } from "./entity/merchant";
+
+export type User = {
+  id: string;
+  merchant_id: string | null;
   name: string;
   email: string;
-  avatar?: string | null;
-  email_verified_at?: string;
-}
+  email_verified_at: Date | null;
+  type: string;
+  password: string;
+  merchant?: Merchant | null;
+} & TimestampEntity &
+  SoftDeleteEntity;
 
 export type PaginationProps<T> = {
   data?: T | null;

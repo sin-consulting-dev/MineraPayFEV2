@@ -49,4 +49,12 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Get the merchant that owns the user.
+     */
+    public function merchant()
+    {
+        return $this->belongsTo(Merchant::class);
+    }
 }

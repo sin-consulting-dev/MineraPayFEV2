@@ -18,7 +18,7 @@ class MerchantDomainController extends Controller
                 return $query->where('merchant_id', $user->merchant->id);
             })
             ->latest('updated_at')
-            ->paginate($request->input('per_page', 50));
+            ->paginate($request->input('per_page', 10));
 
         // Code to display a listing of the resource
         return inertia('Merchant/Domain/Index', $data);

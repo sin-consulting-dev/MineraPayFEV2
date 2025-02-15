@@ -24,7 +24,15 @@ class DatabaseSeeder extends Seeder
         ]);
 
         MerchantGroup::factory()
-            ->has(Merchant::factory()->count(5)->hasDomains(50))
+            ->has(
+                Merchant::factory()
+                    ->hasDomains(50)
+                    ->count(5)
+                    ->state([
+                        'name' => 'Test Merchant',
+                        'email' => 'merchant@minerapay.dev',
+                    ])
+            )
             ->create();
 
         $merchants = Merchant::all();

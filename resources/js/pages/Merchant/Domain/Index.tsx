@@ -17,6 +17,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Table,
   TableBody,
@@ -27,7 +28,7 @@ import {
 } from "@/components/ui/table";
 import Authenticated from "@/layouts/AuthenticatedLayout";
 import { PageProps, PaginationProps } from "@/types";
-import { MerchantDomain } from "@/types/response/domain";
+import { MerchantDomain } from "@/types/entity/domain";
 import { Head, router, usePage } from "@inertiajs/react";
 import dayjs from "dayjs";
 import { Loader2Icon, Plus } from "lucide-react";
@@ -45,6 +46,10 @@ const createFormSchema = z.object({
   domain: z.string(),
 });
 
+const filterFormSchema = z.object({
+  domain: z.string().optional(),
+});
+
 const DialogForm = () => {
   const { open, setOpen, selected } = useContext(DialogFormContext);
   const [isSubmitting, setSubmitting] = useState(false);
@@ -54,14 +59,17 @@ const DialogForm = () => {
   });
 
   const onSubmit = (values: z.infer<typeof createFormSchema>) => {
-    router.visit(route(`merchant.domain.${selected ? 'update' : 'store'}`, selected?.id), {
-      method: selected ? "patch" : "post",
-      data: values,
-      preserveScroll: true,
-      onSuccess: () => {
-        form.reset();
-      },
-    });
+    router.visit(
+      route(`merchant.domain.${selected ? "update" : "store"}`, selected?.id),
+      {
+        method: selected ? "patch" : "post",
+        data: values,
+        preserveScroll: true,
+        onSuccess: () => {
+          form.reset();
+        },
+      }
+    );
   };
 
   useEffect(() => {
@@ -76,7 +84,9 @@ const DialogForm = () => {
     <Dialog open={open} onOpenChange={(_open) => setOpen(_open)}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{selected ? 'Edit Domain' : 'Add New Domain'}</DialogTitle>
+          <DialogTitle>
+            {selected ? "Edit Domain" : "Add New Domain"}
+          </DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -88,17 +98,25 @@ const DialogForm = () => {
                   <FormItem>
                     <FormLabel>Domain</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter Domain Name" disabled={isSubmitting} {...field} />
+                      <Input
+                        placeholder="Enter Domain Name"
+                        disabled={isSubmitting}
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
               <DialogFooter>
-                <Button type="button" variant="ghost" onClick={() => {
-                  form.reset()
-                  setOpen(false)
-                }}>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  onClick={() => {
+                    form.reset();
+                    setOpen(false);
+                  }}
+                >
                   Cancel
                 </Button>
                 <Button type="submit" disabled={isSubmitting}>
@@ -107,7 +125,9 @@ const DialogForm = () => {
                       <Loader2Icon size="sm" />
                       <span>Saving</span>
                     </span>
-                  ) : 'Save'}
+                  ) : (
+                    "Save"
+                  )}
                 </Button>
               </DialogFooter>
             </div>
@@ -127,6 +147,14 @@ export default function MerchantDomainIndex() {
   const [selected, setSelected] = useState<MerchantDomain | null>(null);
   const [open, setOpen] = useState(false);
 
+  const form = useForm<z.infer<typeof filterFormSchema>>({
+    defaultValues: { domain: '' },
+  });
+
+  const onSubmit = (values: z.infer<typeof filterFormSchema>) => {
+    console.log(values);
+  };
+
   useEffect(() => {
     if (!open) {
       setSelected(null);
@@ -141,8 +169,32 @@ export default function MerchantDomainIndex() {
       <DialogFormContext.Provider value={{ selected, open, setOpen }}>
         <DialogForm />
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+          <h1 className="text-xl font-semibold">Your Domains</h1>
           <div className="flex justify-between items-center gap-4">
-            <h1 className="text-xl font-semibold">Your Domains</h1>
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="items-center gap-4 flex"
+              >
+                <FormField
+                  control={form.control}
+                  name="domain"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col">
+                      <FormControl>
+                        <Input placeholder="Filter by domain name..." {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <div className="flex flex-col space-y-2">
+                  <div className="flex items-center gap-2">
+                    <Button>Apply Filter</Button>
+                  </div>
+                </div>
+              </form>
+            </Form>
             <Button
               className="flex items-center gap-2"
               onClick={() => setOpen(true)}
@@ -151,7 +203,7 @@ export default function MerchantDomainIndex() {
               <span>Register Domain</span>
             </Button>
           </div>
-          <Card className="flex flex-grow">
+          <Card className="flex">
             <Table>
               <TableHeader>
                 <TableRow>
@@ -171,10 +223,15 @@ export default function MerchantDomainIndex() {
                       {dayjs(domain.created_at).format("DD/MM/YYYY")}
                     </TableCell>
                     <TableCell className="flex justify-end gap-1">
-                      <Button size="sm" onClick={() => {
-                        setOpen(true);
-                        setSelected(domain);
-                      }}>Edit</Button>
+                      <Button
+                        size="sm"
+                        onClick={() => {
+                          setOpen(true);
+                          setSelected(domain);
+                        }}
+                      >
+                        Edit
+                      </Button>
                       <Button size="sm" variant="destructive">
                         Delete
                       </Button>
